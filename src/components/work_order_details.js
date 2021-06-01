@@ -22,13 +22,10 @@ export default class WorkOrder extends Component {
     axios
       .get(`https://www.hatchways.io/api/assessment/work_orders`)
       .then(async (response) => {
-        console.log(response);
 
         let workerIdAlreadySeen = [];
 
         for (let i = 0; i < response.data.orders.length; i++) {
-          console.log("i", i);
-
           let wokerIdValue = response.data.orders[i].workerId;
           if (workerIdAlreadySeen.indexOf(wokerIdValue) == -1) {
             //return true;
@@ -62,19 +59,16 @@ export default class WorkOrder extends Component {
         
       })
       .then((response) => {
-        //console.log("WORKERS", response);
         this.setState({
           workerData: response.data.worker,
         });
       })
       .catch((error) => {
-        console.log(error);
       });
   }
 
   render() {
     let workerIdD = this.state.workerData;
-    console.log("WORKERIdD", workerIdD);
     let workerOrder = this.state.workOrderData;
     let workerFilter = this.state.workOrderData.filter((work) => {
       return (
@@ -83,8 +77,6 @@ export default class WorkOrder extends Component {
           .indexOf(this.state.search.toLocaleLowerCase()) !== -1
       );
     });
-    console.log("workerFilter", workerFilter);
-
     return (
       <div className="container">
         <div>
@@ -114,12 +106,10 @@ export default class WorkOrder extends Component {
             </li>
           </ul>
         ))}
-        {/* <div className="order_detail"> */}
 
         {Object.keys(workerIdD).map((oneKey, i) => (
           <li key={i}>{workerIdD[oneKey]}</li>
         ))}
-        {/* </div> */}
       </div>
     );
   }
